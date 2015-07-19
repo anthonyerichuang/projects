@@ -1,0 +1,52 @@
+#include <iostream>
+#include <string>
+#include <cstring>
+using namespace std;
+
+void count();
+
+int main()
+{
+	count();
+	return 0;
+}
+
+void count()
+{
+	cout<<"Input phrase: ";
+	string phrase;
+	cin>>phrase;
+	cout<<endl<<"Counting Vowels: "<<phrase<<endl<<endl;
+	int count = 0;
+	int size = phrase.length();
+	
+	for(int i = 0; i<size; i++)
+	{
+		switch(phrase[i])
+		{
+			case 'a': count++; 
+				break;
+			case 'A': count++;
+				break;
+			case 'e': count++;
+				break;
+			case 'E': count++;
+				break;
+			case 'i': count++;
+				break;
+			case 'I': count++;
+				break;
+			case 'o': count++;
+				break;
+			case 'O': count++;
+				break;
+			case 'u': count++;
+				break;
+			case 'U': count++;
+				break;
+		}	
+	}
+
+	cout<<"There are "<<count<<" vowels in this word"<<endl<<endl;
+
+}
