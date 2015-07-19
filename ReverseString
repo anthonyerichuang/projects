@@ -1,0 +1,32 @@
+#include <iostream>
+#include <string>
+#include <cstring>
+using namespace std;
+
+void reverse();
+
+int main()
+{
+	reverse();
+	return 0;
+}
+
+void reverse()
+{
+	cout<<"Input phrase: ";
+	string phrase;
+	cin>>phrase;
+	cout<<endl<<"Reversing String: "<<phrase<<endl<<endl;
+	
+	int size = phrase.length();
+
+	char *reversed = new char[size];
+
+	for(int i = 0; i<size; i++)
+	{
+		reversed[i] = phrase[size - 1 - i];
+		cout<<reversed[i];
+	}
+
+	cout<<endl<<endl;
+}
