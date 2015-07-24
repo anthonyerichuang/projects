@@ -1,0 +1,111 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+void anagram();
+
+int main()
+{
+
+	anagram();
+	return 0;
+}
+
+void anagram()
+{
+	string word1;
+	string word2;
+
+	char sorted[100];
+	char sorted2[100];
+	int value = 126;
+	int value2 = 126;
+	int placement = 0;
+	int placement2 = 0;
+	int count = 0;
+
+
+	cin>>word1;
+	cin>>word2;
+	
+	// (int)word1[0] sorting with ASCII values
+
+
+	if(word1.length() == word2.length())
+	{
+
+	for(int i = 0; i < word1.length();  i++)
+	{
+		for(int j = 0; j < word1.length(); j++)
+		{
+			
+			if(value > (int)word1[j])
+			{
+				value = (int)word1[j];
+				placement = j;
+			}
+
+			if(value2 > (int)word2[j])
+			{
+				value2 = (int)word2[j];
+				placement2 = j;
+			}
+
+		}
+
+
+		sorted[i] = word1[placement];
+		word1[placement] = '~';
+		value = 126;
+
+		value2 = 126;
+		sorted2[i] = word2[placement2];
+		word2[placement2] = '~';
+	}
+
+
+	for(int g = 0; g < word1.length(); g++)
+	{
+		cout<<sorted[g];
+	}
+
+	cout<<endl;
+
+	for(int g = 0; g < word1.length(); g++)
+	{
+		cout<<sorted2[g];
+	}
+
+	cout<<endl;
+
+	for(int k = 0; k < word1.length(); k++)
+	{
+		if(sorted[k] == sorted2[k])
+		{
+			
+			if(k==word1.length() - 1)
+			{
+				cout<<"Is an Anagram\n";
+			}
+			continue;
+		}
+		else
+		{
+			cout<<"Not an Anagram\n";
+			break;
+		}
+	}
+
+
+
+	}
+	else
+	{
+		cout<<"Not an Anagram\n";
+	}
+
+
+
+cout<<endl<<endl;
+
+}
