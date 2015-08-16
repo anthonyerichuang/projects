@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+
+<input id="num" type="number">
+<button onclick="getElementById('demo').innerHTML=loop()">Loop the Button</button>
+<p id="demo"></p>
+<script>
+
+function loop()
+{
+	var text = "";
+	var i;
+	var numbervalue = document.getElementById("num").value;
+
+if(numbervalue > 0)
+{
+	for (i = 0; i < numbervalue; i++) 
+	{
+   	 text += i + "<br>";
+	}
+}
+else
+{
+	window.alert("Error: Not defined or lower than 0");
+}
+
+	return text;
+}
+    
+
+
+
+</script>
+
+</body>
+</html>
