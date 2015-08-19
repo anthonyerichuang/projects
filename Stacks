@@ -1,0 +1,131 @@
+#include <iostream>
+using namespace std;
+
+const int MAX=10;
+typedef int STACK;
+
+class stack
+{
+	private:
+	STACK lane[MAX];
+	int top;
+public:
+	stack();
+	bool empty();
+	void push (STACK lane);
+	void pop ();
+	int getTop (STACK &lane);
+	void print();
+
+};
+
+int main()
+{
+	int stacktop;
+	stack lot1;
+	stack lot2;
+	stack temp;
+	char answer;
+	int plate;
+	lot1.push(1);
+	lot1.push(2);
+	lot1.push(3);
+	lot1.push(4);
+	lot1.push(5);
+	lot1.push(6);
+	lot1.push(7);
+	lot1.push(8);
+	lot1.push(9);
+	lot1.push(0);
+	lot1.print();
+	cout<<"Hello, welcome to Anthony's Parking Lot!\n";
+	cout<<"What would you like me to do?\n";
+	cout<<"A - Arrival\n";
+	cout<<"D - Departing\n";
+	cin>>answer;
+	if (answer=='A'||answer=='a')
+	{
+		if(lot1.empty())
+		{
+			cout<<"Please enter your license's plate #\n";
+			cin>>plate;
+			lot1.push(plate);
+		}
+		else
+		{ cout<<"Sorry our parking lot is all full right now\n"; }
+		
+	}
+
+	if (answer=='D'||answer=='d')
+	{
+		if(lot1.empty()&&lot2.empty())
+		{ cout<<"Sorry, it seems you are at the wrong place\n"; }
+		else
+		{
+			cout<<"Please enter your license's plate #\n"; 
+			cin>>plate;
+		}
+	}
+			
+	return 0;
+}
+
+stack::stack()
+{
+	top = -1;
+}
+
+bool stack::empty()
+{
+	if(top<0)
+	{
+		return true; 
+	}
+	else
+	{
+		return false;
+	}
+}
+
+void stack::push(STACK newlane)
+{
+	if( top>=MAX - 1)
+		cout<<"Stack is Full\n";
+	else
+	{
+	top++;
+	lane[top]=newlane;
+	}
+}
+
+void stack::pop()
+{
+	if (empty())
+	{
+		cout<<"Stack is empty";
+	}
+	else
+	{
+		top--;
+	}
+}
+
+int stack::getTop(STACK &stacktop)
+{
+	if (empty())
+	{
+		cout<<"Stack is empty\n";
+	}
+	else
+	{stacktop=lane[top];
+	return stacktop;}
+}
+
+void stack::print()
+{
+	int i;
+	for(i=0;i<=MAX;i++)
+	{
+	cout<<lane[i]<<endl;
+	}
+}
