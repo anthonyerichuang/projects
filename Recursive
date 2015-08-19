@@ -1,0 +1,62 @@
+#include <iostream>
+using namespace std;
+
+void input(int input[]);
+void sort(int input[], int sorted[], int num);
+void display(int sorted[]);
+
+int main()
+{
+	int input1[8];
+	int sorted[8];
+	int size = 8;
+	input(input1);
+	sort(input1, sorted, size - 1);
+	display(sorted);
+
+	return 0;
+}
+
+
+
+
+void input(int input[])
+{
+	cout<<"Please input 8 intergers\n";
+	for(int i = 0; i < 8; i++)
+	{
+		cin>>input[i];
+	}
+}
+
+void sort(int input[], int sorted[], int num)
+{
+	int max = 0;
+	int placeholder = 0;
+
+	if(num>=0)
+	{
+		for(int i = 0; i < 8; i++)
+		{
+			if(max < input[i])
+			{
+				max = input[i];
+				placeholder = i;
+				sorted[num] = max;
+			}
+			
+		}
+		input[placeholder] = 0;
+		sort(input,sorted,num - 1);
+	}
+
+}
+
+void display(int sorted[])
+{
+	
+	for(int i = 0; i < 8; i++)
+	{
+		cout<<sorted[i]<<" ";
+	}
+}
