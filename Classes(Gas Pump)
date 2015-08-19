@@ -1,0 +1,159 @@
+#include <iostream>
+#include <ctime>
+using namespace std;
+
+class gaspump	// Declaring Class Pump
+{
+public:
+	gaspump();
+	void gaspumped(int gasamount);
+	double totalprice(int requestamount);
+	void print();
+private:
+	float gasprice;    // Declaring private class members
+	int gastank;
+};
+
+class customer		// Declaring Class Customer
+{
+public:
+	customer();
+	int arrivaltime();
+	int requestamount();
+};
+
+
+int main()
+{
+	gaspump ob;					//Creating Class Objects
+	customer obcustomer;
+
+	int idletime =0;			// Setting Variables
+	int timeremaining = 90;
+	int customerrequest = 0;
+	double pumped = 0;
+	double price = 0;
+	
+	srand ( time(NULL) );      
+
+	ob.print();			// Displaying Welcoming Message
+
+
+	while(timeremaining > 0)	// Checks if there is any time remaining
+	{
+		cout<<"************************************************************************";
+
+		idletime = obcustomer.arrivaltime();		// Using Customer Class to get idletime / gas amount
+		customerrequest = obcustomer.requestamount();
+
+		if(idletime > timeremaining)
+		{
+			idletime = timeremaining;
+		}
+
+		timeremaining = timeremaining - idletime;
+
+
+	if(timeremaining==90)				
+	{
+	cout<<"\n\nIdle Time since we opened: "<<idletime<<" minutes\n";
+	}
+	else
+	{
+	cout<<"\nIdle Time since the previous customer: "<<idletime<<" minutes\n";
+	}
+
+	
+	cout<<endl<<endl<<"Customer requested "<<customerrequest<<" Gallons of gas\n";
+
+
+	if(timeremaining != 0)			// Checks if there is time to still pump gas
+	{
+		if(timeremaining < customerrequest)
+		{
+			pumped = timeremaining;		// If there is not enough time to pump the requested amount, pump whatever is possible
+
+			
+		price = ob.totalprice(pumped);		// Calculating Total Price
+		cout<<"We pumped only"<<pumped<<" Gallons of Gas\n";	// Display
+		cout<<"Total Price for "<<pumped<<" Gallons of gas is "<<price<<endl<<endl;
+		ob.gaspumped(pumped);			// Keeping track of the gastank
+		timeremaining = timeremaining - pumped;	// Keeping track of time remaining
+		}
+
+		else
+		{
+		pumped = customerrequest;		// If there is enough time to pump the gas, pump it!
+
+
+		price = ob.totalprice(pumped);		
+		cout<<"We pumped "<<pumped<<" Gallons of Gas\n";
+		cout<<"Total Price for "<<pumped<<" Gallons of gas is "<<price<<endl<<endl;
+		ob.gaspumped(pumped);		
+		timeremaining = timeremaining - pumped;
+		} // End if
+
+	}  // End if
+
+	else		
+	{
+		cout<<"Not enough time to pump any gas. Please come again!\n";
+	}
+
+
+		cout<<"\nThere are "<<timeremaining<<" minutes left till we go eat our lunch\n";
+		cout<<"************************************************************************\n\n\n\n\n\n\n";
+
+
+	};
+
+
+
+
+	system("pause");
+	return 0;
+}
+gaspump::gaspump()
+{
+	gastank = 500;
+	gasprice = 3.25;
+}
+
+void gaspump::print()
+{
+	cout<<"We have "<<gastank<<" Gallons of gas in our tank \n";
+	cout<<"The price per gallon is $"<<gasprice<<endl<<endl;
+}
+
+double gaspump::totalprice(int requestamount)
+{
+	double requestprice = 0;
+
+	requestprice = gasprice * requestamount;
+
+	return requestprice;
+}
+
+void gaspump::gaspumped(int gasamount)
+{
+	gastank = gastank - gasamount;
+	cout<<"There is "<<gastank<<" gallons of gas remaining\n";
+}
+
+customer::customer()
+{
+}
+
+int customer::arrivaltime()
+{
+	int time = 0;
+	time = rand() % 15 + 1;
+	return time;
+}
+
+int customer::requestamount()
+{
+	int request = 0;
+	request = rand() % 27 + 3;
+	return request;
+}
