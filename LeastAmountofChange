@@ -1,0 +1,57 @@
+#include <iostream>
+using namespace std;
+
+void coins ();
+
+int main()
+{
+	coins();
+	return 0;
+}
+
+void coins()
+{
+	int quarter;
+	int dime;
+	int nickel;
+	int penny;
+	int value;
+
+	cout<<"Choose a value 1 - 99 : ";
+	cin>>value;
+	cout<<endl;
+
+
+	for(int i = 0; i < 4; i++)
+	{
+		if(i == 0)
+		{
+			quarter = value / 25;
+			value = value - 25 * (quarter);
+			cout<<quarter<<" Quarters\n";
+		}
+
+		if(i == 1)
+		{
+			dime = value / 10;
+			value = value - 10 * (dime);
+			cout<<dime<<" Dimes\n";
+		}
+
+		if(i == 2)
+		{
+			nickel = value / 5;
+			value = value - 5 * (nickel);
+			cout<<nickel<<" Nickels\n";
+		}
+
+		if(i == 3)
+		{
+			penny = value / 1;
+			value = value - 1 * (penny);
+			cout<<penny<<" Pennies\n";
+		}
+
+
+	}
+}
