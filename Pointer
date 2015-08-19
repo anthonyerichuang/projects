@@ -1,0 +1,174 @@
+#include <iostream>
+using namespace std;
+
+class po
+{
+public:
+	po();
+	po(int size);
+	int recapacity(){return capacity;};
+	int reelements(){return elements;};
+	int getelement();
+	void setelement();
+	bool full();
+	bool empty();
+	void addelement();
+	void increase();
+private:
+	int *c;
+	int *p;
+	int capacity;
+	int elements;
+};
+int main()
+{
+	po object;
+	char answer2;
+	int answer;
+	int cap,ele;
+	int getele;
+	
+	do
+	{
+	cout<<"Please Choose your selection\n";
+	cout<<"1 - View Capacity\n";
+	cout<<"2 - View Elements\n";
+	cout<<"3 - Add Element value to next location\n";
+	cout<<"4 - Get the value of an element location\n";
+	cout<<"5 - Set a value of an element location\n";
+	cout<<"6 - Check if Capacity is full\n";
+	cout<<"7 - Check if Capacity is empty\n";
+	cin>>answer;
+
+	switch(answer)
+	{
+		case 1:cap=object.recapacity(); cout<<cap<<endl;
+			break;
+		case 2:ele=object.reelements(); cout<<ele<<endl;
+			break;
+		case 3:object.addelement();
+			break;
+		case 4:getele=object.getelement(); cout<<getele<<endl;
+			break;
+		case 5:object.setelement();
+			break;
+		case 6:object.full();
+			break;
+		case 7:object.empty();
+			break;
+	}
+	cout<<"Would you like to choose another option?\n";
+	cout<<"y - yes\n";
+	cout<<"n - no(quit)\n";
+	cin>>answer2;
+	if(answer2=='y'||answer2=='Y');
+	{
+		system("cls");
+	}
+	}
+	while(answer2=='y'||answer2=='Y');
+
+	return 0;
+}
+
+po::po()
+{
+	p=new int[10];
+	capacity=10;
+	elements=0;
+}
+
+po::po(int size)
+{
+	p=new int[size];
+}
+
+int po::getelement()
+{
+	int loc;
+	cout<<"Please enter the location of the value you want to get back\n";
+	cin>>loc;
+	loc=loc-1;
+	return *(p+loc);
+}
+
+void po::setelement()
+{
+	int value, location;
+
+	cout<<"Please enter your value\n";
+	cin>>value;
+	cout<<"Please enter the location you would like the value to change\n";
+	cin>> location;
+	location=location-1;
+	*(p+location)=value;
+	elements=elements + 1;
+}
+
+bool po::full()
+{
+	int total;
+	if(capacity==elements)
+	{
+		cout<<"Array is filled\n";
+		return true;
+	}
+	if(capacity!=elements)
+	{
+		total=capacity-elements;
+		cout<<"Array is not filled\n";
+		cout<<"Remaining space: "<<total<<endl;
+		return false;
+	}
+}
+
+bool po::empty()
+{
+	if(elements==0)
+	{
+		cout<<"No values set\n";
+		return true;
+	}
+	else cout<<"Elements is not empty\n";
+}
+
+void po::addelement()
+{
+	int value;
+	cout<<"Please enter your value\n";
+	cin>>value;
+
+	if(elements<capacity)
+	{
+		if(elements==0)
+		{
+			*p=value;
+			elements=elements + 1;
+		}
+		else
+		{
+			*(p+1)=value;
+			elements=elements + 1;
+		}
+	}
+	if(elements==capacity)
+	{
+		po::increase();
+	}
+
+}
+
+void po::increase()
+{
+	int i;
+	capacity=capacity * 2;
+	c=new int[capacity];
+
+	for(i=0;i<capacity;i++)
+	{
+		*(c+i)=*(p+i);
+	}
+
+	p=new int[capacity];
+
+}
