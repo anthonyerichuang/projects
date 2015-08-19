@@ -1,0 +1,69 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+class calc
+{
+public:
+	void add();
+	void sub();
+	void mult();
+	void divide();
+	void power();
+};
+
+int main()
+{
+	cout<<"Calculator 2.0\n";
+	return 0;
+}
+void calc::add()
+{
+	cout<<"a + b =\n";
+	float num1,num2,sum;
+	cin>>num1>>num2;
+	sum=num1+num2;
+	system ("cls");
+	cout<<num1<<" + "<<num2<<" = "<<sum<<endl;
+}
+
+void calc::sub()
+{
+	cout<<"a - b=\n";
+	float num1, num2, sum;
+	cin>>num1>>num2;
+	sum=num1-num2;
+	system ("cls");
+	cout<<num1<<" - "<<num2<<" = "<<sum<<endl;
+}
+
+void calc::mult()
+{
+	cout<<"a * b=\n";
+	float num1, num2, sum;
+	cin>>num1>>num2;
+	sum=num1*num2;
+	system("cls");
+	cout<<num1<<" * "<<num2<<" = "<<sum<<endl;
+}
+	
+void calc::divide()
+{
+	cout<<"a / b=\n";
+	float num1, num2, sum;
+	cin>>num1>>num2;
+	sum=num1/num2;
+	system("cls");
+	cout<<num1<<" / "<<num2<<" = "<<sum<<endl;
+}
+
+void calc::power()
+{
+	cout<<"a^b=\n";
+	float num1, num2, sum;
+	cin>>num1>>num2;
+	sum=pow(num1,num2);
+	system("cls");
+	cout<<num1<<" ^ "<<num2<<" = "<<sum<<endl;
+}
+	
+	
