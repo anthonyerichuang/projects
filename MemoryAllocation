@@ -1,0 +1,403 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+int getSIZE();	//gets the number of partition 
+int getJOB();	//gets the number of jobs
+void fillarray(int part[], int jobs[], int refillP[], int refillJ[], int partsize, int jobsize);	//fills partition size and job size
+void refill(int part[], int jobs[], int refillP[],int refillJ[], int partsize, int jobsize);
+void firstfit(int part[], int jobs[], int partsize, int jobsize);	//first fit function
+void bestfit(int part[], int jobs[], int partsize, int jobsize);	//best fit function
+void nextfit(int part[], int jobs[], int partsize, int jobsize);	//next fit function
+void worstfit(int part[], int jobs[], int partsize, int jobsize);	//worst fit function
+
+int main()
+{
+	int partition;	
+	int sizeofjob;
+	int choice;
+	char yesorno;
+	partition = getSIZE();	//by using dynamic arrays we can choose to have the user choose partition size and such
+	sizeofjob = getJOB();
+
+
+	int* memory=new int[partition];	//dynamic arrays
+	int* job=new int[sizeofjob];
+	int* refillpartition=new int[sizeofjob];
+	int* refilljob=new int[sizeofjob];
+	fillarray(memory, job, refillpartition, refilljob, partition, sizeofjob); //fills the array
+
+
+	do{
+	system("cls");
+	refill(memory, job, refillpartition, refilljob, partition, sizeofjob);
+	cout<<"Choose option:\n1. First Fit\n2. Best Fit\n3. Next Fit\n4. Worst Fit\n";
+	cin>>choice;
+
+	switch (choice)
+	{
+		case 1:firstfit(memory, job,partition, sizeofjob); //calls the firstfit function
+		  break;
+		case 2:bestfit(memory, job, partition, sizeofjob); //calls the bestfit function;
+		  break;
+		case 3:nextfit(memory, job, partition, sizeofjob); //calls the nextfit function
+		  break;
+		case 4:worstfit(memory, job, partition, sizeofjob);//calls the worstfit function
+		  break;
+	}
+	cout<<"Try a different method?\nY - Yes\nN - No\n";
+	cin>>yesorno;
+	}
+	while(yesorno=='Y' || yesorno=='y');
+	
+
+
+
+	return 0;
+}
+
+
+
+int getSIZE()
+{
+	int sizeofpartition;
+	bool status ="false";
+
+	do	//do loop to make sure partition isn't over 5
+	{
+		cout<<"How many partition do you want? [MAXIMUM PARTITION = 5]\n";	
+		cin>>sizeofpartition;
+		if(sizeofpartition > 5)
+		{
+			cout<<"too high please try again";
+			status = true;
+		}
+		else
+		{ status = false; }
+	}
+	while(status);
+
+	return sizeofpartition;
+}
+
+int getJOB()
+{
+	int jobsize; //standard getting job amount
+	cout<<"\nHow many jobs do you want ";
+	cin>>jobsize;
+	return jobsize;
+}
+
+void fillarray(int part[], int jobs[], int refillP[], int refillJ[], int partsize, int jobsize)
+{
+	system("cls");
+	int size;	//standard filling in partition and job arrays
+	cout<<"Please choose Partition Size\n";
+	for(int i = 0; i < partsize; i++)
+	{
+		cout<<"Partition "<<i+1<<" - ";
+		cin>>size;
+		part[i] = size;
+	}
+
+	cout<<endl;
+	
+	size = 0;
+	for(int i = 0; i < jobsize; i++)
+	{
+		cout<<"Job "<<i+1<<" - ";
+		cin>>size;
+		jobs[i] = size;
+	}
+
+	for(int i =0; i<partsize;i++)
+	{
+		refillP[i] = part[i];
+	}
+	for(int i =0; i<jobsize;i++)
+	{
+		refillJ[i] = jobs[i];
+	}
+
+
+
+}
+
+void refill(int part[], int jobs[], int refillP[], int refillJ[], int partsize, int jobsize)
+{
+	for(int i =0; i<partsize;i++)
+	{
+		part[i] = refillP[i];
+	}
+	for(int i =0; i<jobsize;i++)
+	{
+		jobs[i] = refillJ[i];
+	}
+}
+
+
+void firstfit(int part[], int jobs[], int partsize, int jobsize)
+{
+	int wasted = 0;
+	system("cls");	
+	string* status=new string[partsize]; //creates a status to switch partition on standby to busy so we don't keep putting in jobs into it
+
+	
+	for(int i = 0; i<partsize; i++)	//displays partition sizes before jobs are allocated
+	{
+		cout<<"Partition "<<i+1<<" Size ["<<part[i]<<"] Status: Standby\n"; 
+		status[i]="Standby";
+	}
+
+	cout<<"\n\nFirst Fit\n";
+
+	for(int i=0; i<jobsize;i++) // i represent the jobs with this nested loop we look at jobs at primary while going through
+	{							// the partition to find avaliable spacing
+
+		for(int k=0; k<partsize; k++) // the k represent the partition as we need to look through each one first in this loop
+		{							  // to make sure if there is any partition that can hold the job
+			if(status[k] != "Busy" && jobs[i] > 0)
+			{
+				if(jobs[i] <= part[k])
+				{
+					part[k] = part[k] - jobs[i];
+					jobs[i] = 0;
+					status[k] = "Busy";
+					cout<<"J"<<i+1<<"/P"<<k+1<<endl; // Display Job Breakdown
+				}
+			}
+		}
+
+	}
+
+	cout<<endl<<endl;
+
+	for(int i = 0; i<partsize; i++)
+	{
+		cout<<"Partition "<<i+1<<" Size ["<<part[i]<<"] Status: "<<status[i]<<endl;
+	}
+	
+	for(int i = 0; i<partsize; i++)
+	{
+		wasted = wasted + part[i]; //standard calculation for total wasted memory
+	}
+
+	cout<<"Total Wasted Memory - "<<wasted<<endl;
+}
+
+
+
+
+void bestfit(int part[], int jobs[], int partsize, int jobsize)
+{
+	int wasted = 0;
+
+	system("cls");	
+	string* status=new string[partsize]; //creates a status to switch partition on standby to busy so we don't keep putting in jobs into it
+
+	
+	for(int i = 0; i<partsize; i++)	//displays partition sizes before jobs are allocated
+	{
+		cout<<"Partition "<<i+1<<" Size ["<<part[i]<<"] Status: Standby\n"; 
+		status[i]="Standby";
+	}
+
+	cout<<endl<<endl<<endl<<"Best Fit\n\n";
+
+	for(int k = 0; k<jobsize; k++) //Best Fit loop we go through each partition to check for the lowest possible memory lost
+	{							   // Then we take the position so for example if there is a job that is 400 and 2 partition that has 400 memory
+								   // we don't choose the most bottom one
+	int lowest = 9999999;
+	int lowestplaceholder = 0;
+	int position = -1;
+
+		for(int i = 0; i<partsize; i++)
+		{
+			if(status[i]!="Busy")	//Make sure partition isn't taken
+			{
+				lowestplaceholder = part[i] - jobs[k];
+				if(lowestplaceholder>=0)
+				{
+					if(lowest>lowestplaceholder)
+					{
+						lowest = lowestplaceholder;
+						position = i;
+					}
+				}
+
+			}
+
+		}
+		if(position > -1)
+		{
+			status[position]="Busy";
+			part[position] = part[position] - jobs[k];
+			jobs[k] = 0;
+			cout<<"J"<<k+1<<"/P"<<position+1<<endl;
+		}
+	}
+
+	
+	for(int i = 0; i<partsize; i++)
+	{
+		cout<<"\nPartition "<<i+1<<" Size ["<<part[i]<<"] Status: "<<status[i]<<endl;
+	}
+
+	for(int i = 0; i<partsize; i++)
+	{
+		wasted = wasted + part[i]; //standard calculation for total wasted memory
+	}
+
+	cout<<"Total Wasted Memory - "<<wasted<<endl<<endl;
+
+}
+
+
+
+
+void nextfit(int part[], int jobs[], int partsize, int jobsize)
+{
+	int wasted = 0;
+	int position =0;
+	int lastposition =0;
+	int count = 0;
+	int counter = 0;
+	system("cls");	
+	string* status=new string[partsize]; //creates a status to switch partition on standby to busy so we don't keep putting in jobs into it
+
+	
+	for(int i = 0; i<partsize; i++)	//displays partition sizes before jobs are allocated
+	{
+		cout<<"Partition "<<i+1<<" Size ["<<part[i]<<"] Status: Standby\n"; 
+		status[i]="Standby";
+	}
+
+	cout<<endl<<endl;
+	for(int k = 0; k<jobsize; k++)		
+	{
+
+		count = 0;	// Set count to 0 before each search through partition
+
+		do
+		{
+		if(status[position] !="Busy")
+		{
+			if(part[position] - jobs[k] >= 0)		//check to see if job fits
+			{
+				part[position] = part[position] - jobs[k];	//Sets jobs into partition and changes status also adds to counter so loop doesn't run after
+				status[position] = "Busy";					//a sucessful job input into partition
+				jobs[k] = 0;
+				cout<<"J"<<k+1<<"/P"<<position+1<<endl;
+				count++;
+			}
+
+		}
+
+		position++;			//Adds 1 to position regardless if there was a job input into partition or not
+
+		if(count == 0)		//Will keep track of position and last position so it can loop around the array
+		{
+			if(position >= partsize) //Example: # of partition = 5, when position reaches 5, position will be reset. 
+			{						
+				position = 0;
+			}
+			if(lastposition == position)	//Example: if lastposition was 2 and after finding no matches for the job, position resets to 0
+			{								//Count adds to get out of do while loop
+				position = 0;
+				count++;
+			}
+		}
+
+		}
+		while(count==0);
+
+		lastposition = position - 1;	// Placeholder for last position so when it resets, it does not get stuck
+		
+
+	}
+
+	cout<<endl<<endl<<endl<<"Next Fit\n\n";
+
+	
+	for(int i = 0; i<partsize; i++)
+	{
+		cout<<"Partition "<<i+1<<" Size ["<<part[i]<<"] Status: "<<status[i]<<endl;
+	}
+
+	for(int i = 0; i<partsize; i++)
+	{
+		wasted = wasted + part[i]; //standard calculation for total wasted memory
+	}
+
+	cout<<"Total Wasted Memory - "<<wasted<<endl<<endl;
+}
+
+
+
+void worstfit(int part[], int jobs[], int partsize, int jobsize)
+{
+	int wasted = 0;
+	int max =-100;
+	int position = -1;
+
+	system("cls");	
+	string* status=new string[partsize]; //creates a status to switch partition on standby to busy so we don't keep putting in jobs into it
+
+	for(int i = 0; i<partsize; i++)	//displays partition sizes before jobs are allocated
+	{
+		cout<<"Partition "<<i+1<<" Size ["<<part[i]<<"] Status: Standby\n"; 
+		status[i]="Standby";
+	}
+
+
+		cout<<endl<<endl<<endl<<"Worst Fit\n";
+
+
+
+	for(int k = 0; k<jobsize; k++)	// Looks for highest memory avaliable when placing a job in
+	{
+		position = -1;
+		max = -100;
+
+		for(int i = 0; i<partsize; i++)
+		{
+
+			if(status[i] != "Busy")
+			{
+				if(part[i]-jobs[k] >=0)
+				{
+					if(part[i] - jobs[k] > max)
+					{
+						max = part[i]-jobs[k];
+						position = i;
+					}
+				}
+
+			}
+
+		}
+
+			if(position>-1)
+			{
+				part[position] = part[position] - jobs[k];
+				status[position] = "Busy";
+				cout<<"J"<<k+1<<"/P"<<position+1<<endl;
+			}
+
+		
+
+	}
+
+	for(int i = 0; i<partsize; i++)
+	{
+		cout<<"Partition "<<i+1<<" Size ["<<part[i]<<"] Status: "<<status[i]<<endl;
+	}
+
+	for(int i = 0; i<partsize; i++)
+	{
+		wasted = wasted + part[i]; //standard calculation for total wasted memory
+	}
+
+	cout<<"Total Wasted Memory - "<<wasted<<endl<<endl;
+
+}
