@@ -1,0 +1,31 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+int main()
+{
+float initial;
+float rate;
+float percent = .01;
+float interest;
+float answer;
+
+cout<<"Enter initial value.\n";
+
+cin>>initial;
+
+cout<<"Enter percentage rate.\n";
+
+cin>>rate;
+
+rate = rate * percent;
+cout<<rate<<endl<<endl;
+
+interest = initial * rate;
+
+answer = initial - interest;
+
+cout<<answer<<endl<<endl;
+
+
+return 0;
+}
