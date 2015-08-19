@@ -1,0 +1,75 @@
+#include <iostream>
+#include <string>
+#include <cstring>
+#include <stdio.h>
+using namespace std;
+int main()
+{
+	string sn = "EXL";
+
+	int size = sn.length();
+
+	int *values = new int[size];
+	int current_value = 0;
+	int current_value2 = 0;
+	int total_value = 0;
+	
+	for(int i = 0; i<size; i++)
+	{
+		
+		if(sn[i] == 'I' || sn[i] == 'i')
+			values[i] = 1;
+		
+		if(sn[i] == 'E' || sn[i] == 'e')
+			values[i] = 3;
+
+		if(sn[i] == 'V' || sn[i] == 'v')
+			values[i] = 5;
+
+		if(sn[i] == 'X' || sn[i] == 'x')
+			values[i] = 10;
+
+		if(sn[i] == 'L' || sn[i] == 'l')
+			values[i] = 50;
+	}
+
+
+		if(values[0]<values[0+1])
+			current_value = values[0] + values[0+1];
+		
+		if(values[0]==values[0+1])
+			current_value = values[0]+values[0];
+
+		if(values[0]>values[0+1])
+			current_value = values[0] - values[0+1];
+
+
+		current_value2 = values[2];
+		
+
+		if(values[1]>values[2])
+			total_value = current_value - current_value2;
+
+		if(values[1]<values[2])
+			total_value = current_value + current_value2;
+
+		if(values[1]==values[2])
+		{
+
+			if(values[0]<values[0+1])
+				total_value = current_value + current_value2;
+		
+			if(values[0]==values[0+1])
+				total_value = current_value + current_value2;
+
+			if(values[0]>values[0+1])
+				total_value = current_value - current_value2;
+
+		}
+
+		cout<<total_value<<endl;
+
+	
+		return 0;
+
+}
