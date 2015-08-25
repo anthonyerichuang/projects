@@ -1,0 +1,26 @@
+#include <iostream>
+#include "elevator.h"
+#include <ctime>
+using namespace std;
+
+
+int main()
+{
+	srand ( time(NULL));			// Seeding
+
+	elevator elevatorob;		// Declaring object
+
+	float time=elevatorob.check_time();  // Setting time
+
+	while(time > 0)
+	{       
+	elevatorob.set_floor();
+	elevatorob.floor_difference();
+	elevatorob.move_floor();
+	time = elevatorob.check_time();
+	}
+
+
+
+	return 0;
+}
