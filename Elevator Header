@@ -1,0 +1,21 @@
+#ifndef elevator_h
+#define elevator_h
+
+
+class elevator		// Declaring Class Elevator
+{
+public:
+	elevator();		
+	void set_floor();	// Chooses random floor between 1-15 and set its
+	void floor_difference();    // Calculates how many floors are being moved
+	void move_floor();		// Moves the Floor while calculating time used
+	float check_time();		// Checks to see if there is time remaining
+private:
+	float time;				// Keep tracks of time
+	float tpf;				// Time per Floor, .5 minute / floor
+	int current_floor;		// Keep tracks of current floor
+	int floordifference;	// Keep tracks of how many floors to move
+	int setfloor;			// Keep tracks of requested floor
+};
+
+#endif
