@@ -1,0 +1,86 @@
+#include <iostream>
+#include "elevator.h"
+#include <ctime>
+using namespace std;
+
+
+
+
+elevator::elevator()
+{
+	tpf = .5;
+	time = 20;
+	current_floor = 1;
+	setfloor = 0;
+	floordifference = 0;
+}
+
+void elevator::set_floor()
+{
+    setfloor = rand() % 15 + 1;				// Random floor between 1 - 15
+	cout<<"Customer requested Floor "<<setfloor<<endl;
+}
+
+void elevator::floor_difference()			
+{
+
+	if(current_floor > setfloor)		// Finding floor differnce, value must be positive
+	{
+		floordifference = current_floor - setfloor;
+	}
+	else
+	{
+		floordifference = setfloor - current_floor;
+	}
+}
+
+
+void elevator::move_floor()
+{
+	float time_allocated;
+	cout<<"Current Floor is "<<current_floor<<endl;
+	cout<<"Moving to Floor "<<setfloor<<endl;
+
+	if(time>0)
+	{
+		time_allocated = floordifference * tpf;   // Calculating how much time was used
+
+		if(current_floor > setfloor)
+		{
+			while(current_floor < setfloor)
+			{
+			current_floor--;    
+			cout<<"\tGoing down to Floor "<<current_floor<<endl;
+			}
+		}
+		else
+		{
+			while(current_floor < setfloor)
+			{
+			current_floor++;
+			cout<<"\tGoing up to Floor "<<current_floor<<endl;
+			}
+
+		}
+		time = time - time_allocated;
+
+		cout<<"Time used to move "<<floordifference<<" floors: "<<time_allocated<<" minutes\n";
+
+		current_floor = setfloor;	// After movement is complete Current Floor is changed
+
+		if(time < 0)
+		{
+			time = 0;
+		}
+
+		cout<<"The Current Floor is now "<<current_floor<<endl;
+		cout<<"Time Remaining: "<<time<<endl<<endl<<endl;
+
+	}
+}
+
+float elevator::check_time()
+{
+
+	return time;
+}
