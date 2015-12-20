@@ -1,0 +1,72 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApplication1
+{
+ 
+
+    class FiveDigitExpo
+    {
+       public static int fivedigits;
+        public static int total;
+        static int digit1;
+        static int digit2;
+        static int digit3;
+        static int digit4;
+        static int digit5;
+
+        static void Main(string[] args)
+        {
+            Set();
+            Add();
+
+        }
+
+        static void Add()
+        {
+            
+
+
+            for(int fivedigits = 10000; fivedigits < 100000; fivedigits++)
+            {
+                string fivestring = fivedigits.ToString();
+                digit1 = (int)Char.GetNumericValue(fivestring[0]);
+                digit2 = (int)Char.GetNumericValue(fivestring[1]);
+                digit3 = (int)Char.GetNumericValue(fivestring[2]);
+                digit4 = (int)Char.GetNumericValue(fivestring[3]);
+                digit5 = (int)Char.GetNumericValue(fivestring[4]);
+
+              int Added = ((int)Math.Pow(digit1, 5)) + ((int)Math.Pow(digit2, 5)) + ((int)Math.Pow(digit3, 5)) + ((int)Math.Pow(digit4, 5)) + (int)Math.Pow(digit5, 5);
+
+              string Addedstring = Added.ToString();
+
+              if (Addedstring == fivestring)
+              {
+                    total = total + fivedigits;
+                    Console.WriteLine("MATCH");
+                    Console.WriteLine(fivedigits);
+              }
+
+
+
+             }
+           Console.WriteLine(total);
+
+
+
+        }
+        
+        static void Set()
+        {
+            total = 0;
+        }
+
+      
+
+      
+    }
+
+}
